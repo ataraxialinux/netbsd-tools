@@ -1,6 +1,18 @@
+diff -ruN ../netbsd/usr.bin/find/extern.h src/find/extern.h
+--- ../netbsd/usr.bin/find/extern.h	2020-04-10 23:58:13.512335998 +0900
++++ src/find/extern.h	2020-04-11 04:04:01.789628489 +0900
+@@ -31,7 +31,7 @@
+  *	from: @(#)extern.h	8.3 (Berkeley) 4/16/94
+  */
+ 
+-#include <sys/cdefs.h>
++//#include <bsd.h>
+ 
+ void	 brace_subst(char *, char **, char *, int *);
+ PLAN	*find_create(char ***);
 diff -ruN ../netbsd/usr.bin/find/find.c src/find/find.c
 --- ../netbsd/usr.bin/find/find.c	2020-04-10 23:58:13.512335998 +0900
-+++ src/find/find.c	2020-04-11 03:30:11.768588229 +0900
++++ src/find/find.c	2020-04-11 03:58:48.676622280 +0900
 @@ -32,15 +32,6 @@
   * SUCH DAMAGE.
   */
@@ -27,7 +39,7 @@ diff -ruN ../netbsd/usr.bin/find/find.c src/find/find.c
  
 diff -ruN ../netbsd/usr.bin/find/function.c src/find/function.c
 --- ../netbsd/usr.bin/find/function.c	2020-04-10 23:58:13.513335998 +0900
-+++ src/find/function.c	2020-04-11 03:29:20.567587214 +0900
++++ src/find/function.c	2020-04-11 04:29:38.217658960 +0900
 @@ -32,15 +32,6 @@
   * SUCH DAMAGE.
   */
@@ -44,15 +56,12 @@ diff -ruN ../netbsd/usr.bin/find/function.c src/find/function.c
  #include <sys/param.h>
  #include <sys/stat.h>
  #include <sys/wait.h>
-@@ -59,9 +50,9 @@
- #include <stdio.h>
- #include <stdlib.h>
+@@ -61,7 +52,7 @@
  #include <string.h>
--#include <tzfile.h>
+ #include <tzfile.h>
  #include <unistd.h>
 -#include <util.h>
 +#include <bsd.h>
-+#include <tzfile.h>
  
  #include "find.h"
  
@@ -71,24 +80,9 @@ diff -ruN ../netbsd/usr.bin/find/function.c src/find/function.c
  
  	/* rmdir directories, unlink everything else */
  	if (S_ISDIR(entry->fts_statp->st_mode)) {
-@@ -962,11 +955,14 @@
- {
- 	u_int32_t flags;
- 
-+#if 0
- 	flags = entry->fts_statp->st_flags;
- 	if (plan->flags == F_ATLEAST)
- 		return ((plan->f_data | flags) == flags);
- 	else
- 		return (flags == plan->f_data);
-+#endif
-+	return (flags == plan->f_data);
- 	/* NOTREACHED */
- }
- 
 diff -ruN ../netbsd/usr.bin/find/ls.c src/find/ls.c
 --- ../netbsd/usr.bin/find/ls.c	2020-04-10 23:58:13.513335998 +0900
-+++ src/find/ls.c	2020-04-11 03:29:20.568587214 +0900
++++ src/find/ls.c	2020-04-11 04:29:55.199659297 +0900
 @@ -29,17 +29,9 @@
   * SUCH DAMAGE.
   */
@@ -108,20 +102,17 @@ diff -ruN ../netbsd/usr.bin/find/ls.c src/find/ls.c
  
  #include <err.h>
  #include <errno.h>
-@@ -50,8 +42,9 @@
- #include <stdlib.h>
- #include <string.h>
+@@ -52,6 +44,7 @@
  #include <time.h>
--#include <tzfile.h>
+ #include <tzfile.h>
  #include <unistd.h>
 +#include <bsd.h>
-+#include <tzfile.h>
  
  #include "find.h"
  
 diff -ruN ../netbsd/usr.bin/find/main.c src/find/main.c
 --- ../netbsd/usr.bin/find/main.c	2020-04-10 23:58:13.513335998 +0900
-+++ src/find/main.c	2020-04-11 03:29:30.269587406 +0900
++++ src/find/main.c	2020-04-11 03:58:48.678622280 +0900
 @@ -32,17 +32,6 @@
   * SUCH DAMAGE.
   */
@@ -155,7 +146,7 @@ diff -ruN ../netbsd/usr.bin/find/main.c src/find/main.c
  int ftsoptions;			/* options for the ftsopen(3) call */
 diff -ruN ../netbsd/usr.bin/find/misc.c src/find/misc.c
 --- ../netbsd/usr.bin/find/misc.c	2020-04-10 23:58:13.513335998 +0900
-+++ src/find/misc.c	2020-04-11 03:29:20.569587214 +0900
++++ src/find/misc.c	2020-04-11 03:58:48.678622280 +0900
 @@ -32,15 +32,6 @@
   * SUCH DAMAGE.
   */
@@ -174,7 +165,7 @@ diff -ruN ../netbsd/usr.bin/find/misc.c src/find/misc.c
  
 diff -ruN ../netbsd/usr.bin/find/operator.c src/find/operator.c
 --- ../netbsd/usr.bin/find/operator.c	2020-04-10 23:58:13.513335998 +0900
-+++ src/find/operator.c	2020-04-11 03:29:20.569587214 +0900
++++ src/find/operator.c	2020-04-11 03:58:48.678622280 +0900
 @@ -32,15 +32,6 @@
   * SUCH DAMAGE.
   */
@@ -193,7 +184,7 @@ diff -ruN ../netbsd/usr.bin/find/operator.c src/find/operator.c
  #include <err.h>
 diff -ruN ../netbsd/usr.bin/find/option.c src/find/option.c
 --- ../netbsd/usr.bin/find/option.c	2020-04-10 23:58:13.513335998 +0900
-+++ src/find/option.c	2020-04-11 03:29:20.570587214 +0900
++++ src/find/option.c	2020-04-11 03:58:48.678622280 +0900
 @@ -32,15 +32,6 @@
   * SUCH DAMAGE.
   */

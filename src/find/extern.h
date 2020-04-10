@@ -31,7 +31,7 @@
  *	from: @(#)extern.h	8.3 (Berkeley) 4/16/94
  */
 
-#include <sys/cdefs.h>
+//#include <bsd.h>
 
 void	 brace_subst(char *, char **, char *, int *);
 PLAN	*find_create(char ***);
