@@ -955,11 +955,14 @@ f_flags(PLAN *plan, FTSENT *entry)
 {
 	u_int32_t flags;
 
+#if 0
 	flags = entry->fts_statp->st_flags;
 	if (plan->flags == F_ATLEAST)
 		return ((plan->f_data | flags) == flags);
 	else
 		return (flags == plan->f_data);
+#endif
+	return (flags == plan->f_data);
 	/* NOTREACHED */
 }
 

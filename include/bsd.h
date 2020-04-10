@@ -86,10 +86,6 @@
 #define	_VFS_NAMELEN	32
 #define	_VFS_MNAMELEN	1024
 
-struct netbsd_stat {
-	uint32_t  st_flags;		/* user defined flags for file */
-};
-
 struct netbsd_statvfs {
 	struct statvfs buf;
 	unsigned long	f_flag;
