@@ -1,0 +1,212 @@
+diff -ruN ../netbsd/usr.bin/find/find.c src/find/find.c
+--- ../netbsd/usr.bin/find/find.c	2020-04-10 23:58:13.512335998 +0900
++++ src/find/find.c	2020-04-11 03:30:11.768588229 +0900
+@@ -32,15 +32,6 @@
+  * SUCH DAMAGE.
+  */
+ 
+-#include <sys/cdefs.h>
+-#ifndef lint
+-#if 0
+-static char sccsid[] = "from: @(#)find.c	8.5 (Berkeley) 8/5/94";
+-#else
+-__RCSID("$NetBSD: find.c,v 1.30 2016/06/13 00:04:40 pgoyette Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
+@@ -53,6 +44,7 @@
+ #include <stdlib.h>
+ #include <stdbool.h>
+ #include <unistd.h>
++#include <bsd.h>
+ 
+ #include "find.h"
+ 
+diff -ruN ../netbsd/usr.bin/find/function.c src/find/function.c
+--- ../netbsd/usr.bin/find/function.c	2020-04-10 23:58:13.513335998 +0900
++++ src/find/function.c	2020-04-11 03:29:20.567587214 +0900
+@@ -32,15 +32,6 @@
+  * SUCH DAMAGE.
+  */
+ 
+-#include <sys/cdefs.h>
+-#ifndef lint
+-#if 0
+-static char sccsid[] = "from: @(#)function.c	8.10 (Berkeley) 5/4/95";
+-#else
+-__RCSID("$NetBSD: function.c,v 1.77 2018/09/04 15:16:15 kre Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/param.h>
+ #include <sys/stat.h>
+ #include <sys/wait.h>
+@@ -59,9 +50,9 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include <tzfile.h>
+ #include <unistd.h>
+-#include <util.h>
++#include <bsd.h>
++#include <tzfile.h>
+ 
+ #include "find.h"
+ 
+@@ -469,12 +460,14 @@
+ 		errx(1, "-delete: %s: relative path potentially not safe",
+ 			entry->fts_accpath);
+ 
++#if 0
+ 	/* Turn off user immutable bits if running as root */
+ 	if ((entry->fts_statp->st_flags & (UF_APPEND|UF_IMMUTABLE)) &&
+ 	    !(entry->fts_statp->st_flags & (SF_APPEND|SF_IMMUTABLE)) &&
+ 	    geteuid() == 0)
+ 		chflags(entry->fts_accpath,
+ 		       entry->fts_statp->st_flags &= ~(UF_APPEND|UF_IMMUTABLE));
++#endif
+ 
+ 	/* rmdir directories, unlink everything else */
+ 	if (S_ISDIR(entry->fts_statp->st_mode)) {
+@@ -962,11 +955,14 @@
+ {
+ 	u_int32_t flags;
+ 
++#if 0
+ 	flags = entry->fts_statp->st_flags;
+ 	if (plan->flags == F_ATLEAST)
+ 		return ((plan->f_data | flags) == flags);
+ 	else
+ 		return (flags == plan->f_data);
++#endif
++	return (flags == plan->f_data);
+ 	/* NOTREACHED */
+ }
+ 
+diff -ruN ../netbsd/usr.bin/find/ls.c src/find/ls.c
+--- ../netbsd/usr.bin/find/ls.c	2020-04-10 23:58:13.513335998 +0900
++++ src/find/ls.c	2020-04-11 03:29:20.568587214 +0900
+@@ -29,17 +29,9 @@
+  * SUCH DAMAGE.
+  */
+ 
+-#include <sys/cdefs.h>
+-#ifndef lint
+-#if 0
+-static char sccsid[] = "from: @(#)ls.c	8.1 (Berkeley) 6/6/93";
+-#else
+-__RCSID("$NetBSD: ls.c,v 1.21 2011/08/31 16:24:57 plunky Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/param.h>
+ #include <sys/stat.h>
++#include <sys/sysmacros.h>
+ 
+ #include <err.h>
+ #include <errno.h>
+@@ -50,8 +42,9 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <time.h>
+-#include <tzfile.h>
+ #include <unistd.h>
++#include <bsd.h>
++#include <tzfile.h>
+ 
+ #include "find.h"
+ 
+diff -ruN ../netbsd/usr.bin/find/main.c src/find/main.c
+--- ../netbsd/usr.bin/find/main.c	2020-04-10 23:58:13.513335998 +0900
++++ src/find/main.c	2020-04-11 03:29:30.269587406 +0900
+@@ -32,17 +32,6 @@
+  * SUCH DAMAGE.
+  */
+ 
+-#include <sys/cdefs.h>
+-#ifndef lint
+-#if 0
+-static char sccsid[] = "@(#)main.c	8.4 (Berkeley) 5/4/95";
+-#else
+-__COPYRIGHT("@(#) Copyright (c) 1990, 1993, 1994\
+- The Regents of the University of California.  All rights reserved.");
+-__RCSID("$NetBSD: main.c,v 1.31 2013/01/24 17:50:08 christos Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
+@@ -56,9 +45,12 @@
+ #include <string.h>
+ #include <time.h>
+ #include <unistd.h>
++#include <bsd.h>
+ 
+ #include "find.h"
+ 
++#define REG_BASIC 0000
++
+ time_t now;			/* time find was run */
+ int dotfd;			/* starting directory */
+ int ftsoptions;			/* options for the ftsopen(3) call */
+diff -ruN ../netbsd/usr.bin/find/misc.c src/find/misc.c
+--- ../netbsd/usr.bin/find/misc.c	2020-04-10 23:58:13.513335998 +0900
++++ src/find/misc.c	2020-04-11 03:29:20.569587214 +0900
+@@ -32,15 +32,6 @@
+  * SUCH DAMAGE.
+  */
+ 
+-#include <sys/cdefs.h>
+-#ifndef lint
+-#if 0
+-static char sccsid[] = "from: @(#)misc.c	8.2 (Berkeley) 4/1/94";
+-#else
+-__RCSID("$NetBSD: misc.c,v 1.14 2006/10/11 19:51:10 apb Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
+diff -ruN ../netbsd/usr.bin/find/operator.c src/find/operator.c
+--- ../netbsd/usr.bin/find/operator.c	2020-04-10 23:58:13.513335998 +0900
++++ src/find/operator.c	2020-04-11 03:29:20.569587214 +0900
+@@ -32,15 +32,6 @@
+  * SUCH DAMAGE.
+  */
+ 
+-#include <sys/cdefs.h>
+-#ifndef lint
+-#if 0
+-static char sccsid[] = "from: @(#)operator.c	8.1 (Berkeley) 6/6/93";
+-#else
+-__RCSID("$NetBSD: operator.c,v 1.10 2014/10/18 08:33:30 snj Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ 
+ #include <err.h>
+diff -ruN ../netbsd/usr.bin/find/option.c src/find/option.c
+--- ../netbsd/usr.bin/find/option.c	2020-04-10 23:58:13.513335998 +0900
++++ src/find/option.c	2020-04-11 03:29:20.570587214 +0900
+@@ -32,15 +32,6 @@
+  * SUCH DAMAGE.
+  */
+ 
+-#include <sys/cdefs.h>
+-#ifndef lint
+-#if 0
+-static char sccsid[] = "from: @(#)option.c	8.2 (Berkeley) 4/16/94";
+-#else
+-__RCSID("$NetBSD: option.c,v 1.27 2016/06/13 00:04:40 pgoyette Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
