@@ -955,7 +955,7 @@ f_flags(PLAN *plan, FTSENT *entry)
 {
 	u_int32_t flags;
 
-	flags = entry->fts_statp->st_flags;
+	flags = entry->fts_statp;
 	if (plan->flags == F_ATLEAST)
 		return ((plan->f_data | flags) == flags);
 	else
