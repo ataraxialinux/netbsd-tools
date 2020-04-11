@@ -1,5 +1,6 @@
 // shit-ton of useless bsd functions
 
+#include <sys/stat.h>
 #include <sys/statvfs.h>
 
 void setpassent(i)
