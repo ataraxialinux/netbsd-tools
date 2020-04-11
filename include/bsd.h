@@ -5,6 +5,7 @@
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <inttypes.h>
 #include <wchar.h>
 
 #define	__attribute__(x)
@@ -13,6 +14,9 @@
 #define	__constfunc	__attribute__((__const__))
 #define	__unused	__attribute__((__unused__))
 #define __UNCONST(a)	((void *)(unsigned long)(const void *)(a))
+#define _DIAGASSERT assert
+#define	__predict_true(exp)	__builtin_expect((exp) != 0, 1)
+#define	__predict_false(exp)	__builtin_expect((exp) != 0, 0)
 
 #ifndef __GLIBC__
 #if defined(__cplusplus)
@@ -62,6 +66,29 @@
 #define	st_ctimensec		st_ctim.tv_nsec
 #endif
 
+/*
+ * Definitions of flags stored in file flags word.
+ *
+ * Super-user and owner changeable flags.
+ */
+#define	UF_SETTABLE	0x0000ffff	/* mask of owner changeable flags */
+#define	UF_NODUMP	0x00000001	/* do not dump file */
+#define	UF_IMMUTABLE	0x00000002	/* file may not be changed */
+#define	UF_APPEND	0x00000004	/* writes to file may only append */
+#define UF_OPAQUE	0x00000008	/* directory is opaque wrt. union */
+/*	UF_NOUNLINK	0x00000010	   [NOT IMPLEMENTED] */
+/*
+ * Super-user changeable flags.
+ */
+#define	SF_SETTABLE	0xffff0000	/* mask of superuser changeable flags */
+#define	SF_ARCHIVED	0x00010000	/* file is archived */
+#define	SF_IMMUTABLE	0x00020000	/* file may not be changed */
+#define	SF_APPEND	0x00040000	/* writes to file may only append */
+/*	SF_NOUNLINK	0x00100000	   [NOT IMPLEMENTED] */
+#define	SF_SNAPSHOT	0x00200000	/* snapshot inode */
+#define	SF_LOG		0x00400000	/* WAPBL log file inode */
+#define	SF_SNAPINVAL	0x00800000	/* snapshot is invalid */
+
 #define SIGINFO 29
 #ifndef ALLPERMS
 #define	ALLPERMS	(S_ISUID|S_ISGID|S_ISTXT|S_IRWXU|S_IRWXG|S_IRWXO)
@@ -75,10 +102,7 @@
 #ifndef ARG_MAX
 #define	ARG_MAX		 (256 * 1024)	/* max bytes for an exec function */
 #endif
-#define	SF_IMMUTABLE	0x00020000	/* file may not be changed */
-#define	SF_APPEND	0x00040000	/* writes to file may only append */
 #define REG_BASIC 0000
-#define _DIAGASSERT assert
 
 #define timespeccmp(tsp, usp, cmp)					\
         (((tsp)->tv_sec == (usp)->tv_sec) ?			\
@@ -95,6 +119,8 @@ struct netbsd_statvfs {
 };
 
 #define	statvfs		netbsd_statvfs
+
+typedef va_list __va_list;
 
 extern const char *const *sys_signame;
 
@@ -114,6 +140,9 @@ int	statvfs(const char *__restrict, struct statvfs *__restrict);
 const char	*group_from_gid(gid_t, int);
 const char	*user_from_uid(uid_t, int);
 char	*fgetln(FILE * __restrict, size_t * __restrict);
+int	reallocarr(void *, size_t, size_t);
+int		 setpassent(int);
+int		 setgroupent(int);
 
 #ifndef __GLIBC__
 quad_t	 strtoq(const char * __restrict, char ** __restrict, int);
@@ -123,3 +152,14 @@ __dead void	errc(int, int, const char *, ...)
 		     __printflike(3, 4) __dead;
 __dead void	verrc(int, int, const char *, va_list)
 		    __printflike(3, 0) __dead;
+intmax_t	strtoimax(const char * __restrict,
+		    char ** __restrict, int);
+intmax_t	strtoimax_l(const char * __restrict,
+		    char ** __restrict, int, locale_t);
+intmax_t	strtoi(const char * __restrict, char ** __restrict, int,
+	               intmax_t, intmax_t, int *);
+uintmax_t	strtou(const char * __restrict, char ** __restrict, int,
+	               uintmax_t, uintmax_t, int *);
+int	 vasprintf(char ** __restrict, const char * __restrict,
+    __va_list)
+		__printflike(2, 0);

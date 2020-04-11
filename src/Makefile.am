@@ -1,1 +1,1 @@
-SUBDIRS = libnetbsd sed
+SUBDIRS = libnetbsd sed find

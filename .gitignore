@@ -32,3 +32,6 @@ install-sh
 .libs
 Makefile
 Makefile.in
+src/sed/sed
+src/find/find
+src/xargs/xargs
