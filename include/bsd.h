@@ -78,6 +78,7 @@
 #define	SF_IMMUTABLE	0x00020000	/* file may not be changed */
 #define	SF_APPEND	0x00040000	/* writes to file may only append */
 #define REG_BASIC 0000
+#define _DIAGASSERT assert
 
 #define timespeccmp(tsp, usp, cmp)					\
         (((tsp)->tv_sec == (usp)->tv_sec) ?			\
