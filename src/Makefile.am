@@ -1,1 +1,1 @@
-SUBDIRS = libnetbsd sed find xargs
+SUBDIRS = libnetbsd sed find xargs m4 patch

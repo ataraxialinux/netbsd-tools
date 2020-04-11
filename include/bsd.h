@@ -110,6 +110,16 @@
         ((tsp)->tv_nsec cmp (usp)->tv_nsec) :			\
         ((tsp)->tv_sec cmp (usp)->tv_sec))
 
+#define __arraycount(a) (sizeof(a) / sizeof(*(a)))
+
+#if !defined(_DIRENT_HAVE_NAMLEN)
+#define D_NAMLEN(x) \
+	strnlen((x)->d_name, (x)->d_reclen)
+#else
+#define D_NAMLEN(x) \
+	(x)->d_namlen
+#endif
+
 #define	_VFS_NAMELEN	32
 #define	_VFS_MNAMELEN	1024
 

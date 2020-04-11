@@ -35,6 +35,17 @@ Makefile.in
 src/sed/sed
 src/find/find
 src/xargs/xargs
+src/m4/m4
+src/patch/patch
+src/pax/pax
 src/sed/Makefile
 src/find/Makefile
 src/xargs/Makefile
+src/m4/Makefile
+src/m4/lib/Makefile
+src/m4/parser*.c
+src/m4/parser*.h
+src/m4/tokernizer.c
+src/patch/Makefile
+src/pax/Makefile
+ylwrap

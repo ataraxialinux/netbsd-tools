@@ -1,0 +1,145 @@
+diff -ruN ../../netbsd/usr.bin/patch/backupfile.c patch/backupfile.c
+--- ../../netbsd/usr.bin/patch/backupfile.c	2020-04-10 23:58:13.588335999 +0900
++++ patch/backupfile.c	2020-04-12 00:30:03.615410351 +0900
+@@ -21,9 +21,6 @@
+  * David MacKenzie <djm@ai.mit.edu>. Some algorithms adapted from GNU Emacs.
+  */
+ 
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: backupfile.c,v 1.15 2014/04/11 17:30:03 christos Exp $");
+-
+ #include <ctype.h>
+ #include <dirent.h>
+ #include <libgen.h>
+@@ -31,6 +28,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
++#include <bsd.h>
+ 
+ #include "backupfile.h"
+ 
+@@ -114,7 +112,7 @@
+ 	file_name_length = strlen(file);
+ 
+ 	while ((dp = readdir(dirp)) != NULL) {
+-		if (dp->d_namlen <= file_name_length)
++		if (D_NAMLEN(dp) <= file_name_length)
+ 			continue;
+ 
+ 		this_version = version_number(file, dp->d_name, file_name_length);
+diff -ruN ../../netbsd/usr.bin/patch/inp.c patch/inp.c
+--- ../../netbsd/usr.bin/patch/inp.c	2020-04-10 23:58:13.589335999 +0900
++++ patch/inp.c	2020-04-12 00:27:15.297394886 +0900
+@@ -30,9 +30,6 @@
+  * behaviour
+  */
+ 
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: inp.c,v 1.26 2018/06/18 18:33:31 christos Exp $");
+-
+ #include <sys/types.h>
+ #include <sys/file.h>
+ #include <sys/stat.h>
+@@ -49,6 +46,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
++#include <bsd.h>
+ 
+ #include "common.h"
+ #include "util.h"
+diff -ruN ../../netbsd/usr.bin/patch/mkpath.c patch/mkpath.c
+--- ../../netbsd/usr.bin/patch/mkpath.c	2020-04-10 23:58:13.589335999 +0900
++++ patch/mkpath.c	2020-04-12 00:26:53.033392840 +0900
+@@ -33,14 +33,12 @@
+  * SUCH DAMAGE.
+  */
+ 
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: mkpath.c,v 1.1 2008/09/19 18:33:34 joerg Exp $");
+-
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <err.h>
+ #include <errno.h>
+ #include <string.h>
++#include <bsd.h>
+ 
+ int	mkpath(char *);
+ 
+diff -ruN ../../netbsd/usr.bin/patch/patch.c patch/patch.c
+--- ../../netbsd/usr.bin/patch/patch.c	2020-04-10 23:58:13.589335999 +0900
++++ patch/patch.c	2020-04-12 00:30:50.910414696 +0900
+@@ -30,9 +30,6 @@
+  * behaviour
+  */
+ 
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: patch.c,v 1.29 2011/09/06 18:25:14 joerg Exp $");
+-
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
+@@ -43,6 +40,7 @@
+ #include <string.h>
+ #include <stdlib.h>
+ #include <unistd.h>
++#include <bsd.h>
+ 
+ #include "common.h"
+ #include "util.h"
+@@ -489,7 +487,11 @@
+ 	Argv_last = Argv;
+ 	if (!Argc)
+ 		return;
++#ifdef __GLIBC__
++	optind = 0;
++#else
+ 	optreset = optind = 1;
++#endif
+ 	while ((ch = getopt_long(Argc, Argv, options, longopts, NULL)) != -1) {
+ 		switch (ch) {
+ 		case 'b':
+diff -ruN ../../netbsd/usr.bin/patch/pch.c patch/pch.c
+--- ../../netbsd/usr.bin/patch/pch.c	2020-04-10 23:58:13.590335999 +0900
++++ patch/pch.c	2020-04-12 00:27:00.453393522 +0900
+@@ -30,9 +30,6 @@
+  * behaviour
+  */
+ 
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: pch.c,v 1.30 2018/06/18 18:33:31 christos Exp $");
+-
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ 
+@@ -43,6 +40,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
++#include <bsd.h>
+ 
+ #include "common.h"
+ #include "util.h"
+diff -ruN ../../netbsd/usr.bin/patch/util.c patch/util.c
+--- ../../netbsd/usr.bin/patch/util.c	2020-04-10 23:58:13.590335999 +0900
++++ patch/util.c	2020-04-12 00:27:09.707394372 +0900
+@@ -30,9 +30,6 @@
+  * behaviour
+  */
+ 
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: util.c,v 1.28 2018/06/18 18:33:31 christos Exp $");
+-
+ #include <sys/param.h>
+ #include <sys/stat.h>
+ 
+@@ -46,6 +43,7 @@
+ #include <stdio.h>
+ #include <string.h>
+ #include <unistd.h>
++#include <bsd.h>
+ 
+ #include "common.h"
+ #include "util.h"

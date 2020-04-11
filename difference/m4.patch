@@ -1,0 +1,218 @@
+diff -ruN netbsd/usr.bin/m4/eval.c m4/eval.c
+--- netbsd/usr.bin/m4/eval.c	2020-04-10 23:58:13.543335998 +0900
++++ m4/eval.c	2020-04-11 23:56:37.702226050 +0900
+@@ -41,8 +41,6 @@
+ #if HAVE_NBTOOL_CONFIG_H
+ #include "nbtool_config.h"
+ #endif
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: eval.c,v 1.27 2018/07/30 22:58:09 kre Exp $");
+ 
+ #include <sys/types.h>
+ #include <ctype.h>
+@@ -57,6 +55,7 @@
+ #include <string.h>
+ #include <inttypes.h>
+ #include <fcntl.h>
++#include <bsd.h>
+ #include "mdef.h"
+ #include "stdd.h"
+ #include "extern.h"
+diff -ruN netbsd/usr.bin/m4/expr.c m4/expr.c
+--- netbsd/usr.bin/m4/expr.c	2020-04-10 23:58:13.543335998 +0900
++++ m4/expr.c	2020-04-11 23:57:15.754229546 +0900
+@@ -18,11 +18,10 @@
+ #if HAVE_NBTOOL_CONFIG_H
+ #include "nbtool_config.h"
+ #endif
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: expr.c,v 1.21 2019/03/26 23:31:45 kre Exp $");
+ #include <stdint.h>
+ #include <stdio.h>
+ #include <stddef.h>
++#include <bsd.h>
+ #include "mdef.h"
+ #include "extern.h"
+ 
+diff -ruN netbsd/usr.bin/m4/gnum4.c m4/gnum4.c
+--- netbsd/usr.bin/m4/gnum4.c	2020-04-10 23:58:13.543335998 +0900
++++ m4/gnum4.c	2020-04-11 23:58:23.058235730 +0900
+@@ -32,8 +32,6 @@
+ #if HAVE_NBTOOL_CONFIG_H
+ #include "nbtool_config.h"
+ #endif
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: gnum4.c,v 1.10 2016/01/16 16:59:18 christos Exp $");
+ 
+ #include <sys/param.h>
+ #include <sys/types.h>
+@@ -48,6 +46,7 @@
+ #include <string.h>
+ #include <errno.h>
+ #include <unistd.h>
++#include <bsd.h>
+ #include "mdef.h"
+ #include "stdd.h"
+ #include "extern.h"
+Binary files netbsd/usr.bin/m4/lib/libohash.a and m4/lib/libohash.a differ
+diff -ruN netbsd/usr.bin/m4/lib/ohash_do.c m4/lib/ohash_do.c
+--- netbsd/usr.bin/m4/lib/ohash_do.c	2020-04-10 23:58:13.543335998 +0900
++++ m4/lib/ohash_do.c	2020-04-12 00:10:55.707304882 +0900
+@@ -19,6 +19,8 @@
+ 
+ #include "ohash_int.h"
+ 
++#define __UNCONST(a)	((void *)(unsigned long)(const void *)(a))
++
+ static void ohash_resize(struct ohash *);
+ 
+ static void 
+diff -ruN netbsd/usr.bin/m4/lib/ohash_enum.c m4/lib/ohash_enum.c
+--- netbsd/usr.bin/m4/lib/ohash_enum.c	2020-04-10 23:58:13.544335998 +0900
++++ m4/lib/ohash_enum.c	2020-04-11 23:45:15.671163386 +0900
+@@ -17,6 +17,7 @@
+  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  */
+ 
++#include <bsd.h>
+ #include "ohash_int.h"
+ 
+ void *
+diff -ruN netbsd/usr.bin/m4/lib/strtonum.c m4/lib/strtonum.c
+--- netbsd/usr.bin/m4/lib/strtonum.c	2020-04-10 23:58:13.544335998 +0900
++++ m4/lib/strtonum.c	2020-04-11 23:58:11.321234651 +0900
+@@ -19,11 +19,10 @@
+ #if HAVE_NBTOOL_CONFIG_H
+ #include "nbtool_config.h"
+ #endif
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: strtonum.c,v 1.2 2009/10/26 21:14:18 christos Exp $");
+ #include <errno.h>
+ #include <limits.h>
+ #include <stdlib.h>
++#include <bsd.h>
+ 
+ #define INVALID 	1
+ #define TOOSMALL 	2
+diff -ruN netbsd/usr.bin/m4/look.c m4/look.c
+--- netbsd/usr.bin/m4/look.c	2020-04-10 23:58:13.544335998 +0900
++++ m4/look.c	2020-04-11 23:58:01.337233734 +0900
+@@ -41,14 +41,13 @@
+ #if HAVE_NBTOOL_CONFIG_H
+ #include "nbtool_config.h"
+ #endif
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: look.c,v 1.13 2016/01/16 17:00:07 christos Exp $");
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <stdint.h>
+ #include <stddef.h>
+ #include <string.h>
+ #include <ohash.h>
++#include <bsd.h>
+ #include "mdef.h"
+ #include "stdd.h"
+ #include "extern.h"
+diff -ruN netbsd/usr.bin/m4/main.c m4/main.c
+--- netbsd/usr.bin/m4/main.c	2020-04-10 23:58:13.545335998 +0900
++++ m4/main.c	2020-04-11 23:58:44.544237704 +0900
+@@ -41,8 +41,6 @@
+ #if HAVE_NBTOOL_CONFIG_H
+ #include "nbtool_config.h"
+ #endif
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: main.c,v 1.48 2019/03/26 16:41:06 christos Exp $");
+ #include <assert.h>
+ #include <signal.h>
+ #include <getopt.h>
+@@ -56,6 +54,7 @@
+ #include <stdint.h>
+ #include <stdlib.h>
+ #include <ohash.h>
++#include <bsd.h>
+ #include "mdef.h"
+ #include "stdd.h"
+ #include "extern.h"
+diff -ruN netbsd/usr.bin/m4/misc.c m4/misc.c
+--- netbsd/usr.bin/m4/misc.c	2020-04-10 23:58:13.545335998 +0900
++++ m4/misc.c	2020-04-11 23:58:33.401236680 +0900
+@@ -35,8 +35,6 @@
+ #if HAVE_NBTOOL_CONFIG_H
+ #include "nbtool_config.h"
+ #endif
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: misc.c,v 1.24 2016/01/16 17:01:22 christos Exp $");
+ #include <sys/types.h>
+ #include <errno.h>
+ #include <unistd.h>
+@@ -46,6 +44,7 @@
+ #include <stddef.h>
+ #include <string.h>
+ #include <err.h>
++#include <bsd.h>
+ #include "mdef.h"
+ #include "stdd.h"
+ #include "extern.h"
+diff -ruN netbsd/usr.bin/m4/parser.y m4/parser.y
+--- netbsd/usr.bin/m4/parser.y	2020-04-10 23:58:13.545335998 +0900
++++ m4/parser.y	2020-04-11 23:46:05.367167952 +0900
+@@ -19,9 +19,9 @@
+ #if HAVE_NBTOOL_CONFIG_H
+ #include "nbtool_config.h"
+ #endif
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: parser.y,v 1.3 2015/01/04 18:31:09 joerg Exp $");
++#include <stdlib.h>
+ #include <stdint.h>
++#include <bsd.h>
+ #define YYSTYPE	int32_t
+ extern int32_t end_result;
+ extern int yylex(void);
+diff -ruN netbsd/usr.bin/m4/tokenizer.l m4/tokenizer.l
+--- netbsd/usr.bin/m4/tokenizer.l	2020-04-10 23:58:13.545335998 +0900
++++ m4/tokenizer.l	2020-04-12 00:04:20.100268535 +0900
+@@ -20,7 +20,6 @@
+ #include "nbtool_config.h"
+ #endif
+ #include "parser.h"
+-__RCSID("$NetBSD: tokenizer.l,v 1.6 2012/03/20 20:34:58 matt Exp $");
+ #include <stdlib.h>
+ #include <errno.h>
+ #include <stdint.h>
+@@ -29,7 +28,7 @@
+ extern int mimic_gnu;
+ extern int32_t yylval;
+ extern int yylex(void);
+-extern int yywrap(void);
++//extern int yywrap(void);
+ 
+ int32_t number(void);
+ int32_t parse_radix(void);
+@@ -38,6 +37,7 @@
+ 
+ %option nounput
+ %option noinput
++%option noyywrap
+ 
+ delim 	[ \t\n]
+ ws	{delim}+
+diff -ruN netbsd/usr.bin/m4/trace.c m4/trace.c
+--- netbsd/usr.bin/m4/trace.c	2020-04-10 23:58:13.545335998 +0900
++++ m4/trace.c	2020-04-11 23:57:48.284232535 +0900
+@@ -27,8 +27,6 @@
+ #if HAVE_NBTOOL_CONFIG_H
+ #include "nbtool_config.h"
+ #endif
+-#include <sys/cdefs.h>
+-__RCSID("$NetBSD: trace.c,v 1.8 2012/03/20 20:34:58 matt Exp $");
+ 
+ #include <sys/types.h>
+ #include <err.h>
+@@ -36,6 +34,7 @@
+ #include <stdint.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <bsd.h>
+ #include "mdef.h"
+ #include "stdd.h"
+ #include "extern.h"
