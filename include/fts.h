@@ -41,11 +41,9 @@
 #ifndef	_FTS_H_
 #define	_FTS_H_
 
-/*
 #ifndef	__fts_stat_t
 #define	__fts_stat_t	struct stat
 #endif
-*/
 #ifndef	__fts_nlink_t
 #define	__fts_nlink_t	nlink_t
 #endif
@@ -140,8 +138,7 @@ typedef struct _ftsent {
 #define	FTS_SKIP	 4		/* discard node */
 	unsigned short fts_instr;	/* fts_set() instructions */
 
-	//__fts_stat_t *fts_statp;	/* stat(2) information */
-	struct stat *fts_statp;
+	__fts_stat_t *fts_statp;	/* stat(2) information */
 	char fts_name[1];		/* file name */
 } FTSENT;
 
