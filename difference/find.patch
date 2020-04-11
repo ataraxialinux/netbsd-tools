@@ -127,7 +127,7 @@ diff -ruN ../netbsd/usr.bin/find/ls.c src/find/ls.c
  
 diff -ruN ../netbsd/usr.bin/find/main.c src/find/main.c
 --- ../netbsd/usr.bin/find/main.c	2020-04-10 23:58:13.513335998 +0900
-+++ src/find/main.c	2020-04-11 03:58:48.678622280 +0900
++++ src/find/main.c	2020-04-11 20:20:12.223032959 +0900
 @@ -32,17 +32,6 @@
   * SUCH DAMAGE.
   */
@@ -146,7 +146,7 @@ diff -ruN ../netbsd/usr.bin/find/main.c src/find/main.c
  #include <sys/types.h>
  #include <sys/stat.h>
  
-@@ -56,9 +45,12 @@
+@@ -56,6 +45,7 @@
  #include <string.h>
  #include <time.h>
  #include <unistd.h>
@@ -154,11 +154,6 @@ diff -ruN ../netbsd/usr.bin/find/main.c src/find/main.c
  
  #include "find.h"
  
-+#define REG_BASIC 0000
-+
- time_t now;			/* time find was run */
- int dotfd;			/* starting directory */
- int ftsoptions;			/* options for the ftsopen(3) call */
 diff -ruN ../netbsd/usr.bin/find/misc.c src/find/misc.c
 --- ../netbsd/usr.bin/find/misc.c	2020-04-10 23:58:13.513335998 +0900
 +++ src/find/misc.c	2020-04-11 03:58:48.678622280 +0900

@@ -77,6 +77,7 @@
 #endif
 #define	SF_IMMUTABLE	0x00020000	/* file may not be changed */
 #define	SF_APPEND	0x00040000	/* writes to file may only append */
+#define REG_BASIC 0000
 
 #define timespeccmp(tsp, usp, cmp)					\
         (((tsp)->tv_sec == (usp)->tv_sec) ?			\
@@ -94,6 +95,8 @@ struct netbsd_statvfs {
 
 #define	statvfs		netbsd_statvfs
 
+extern const char *const *sys_signame;
+
 size_t	 strlcat(char *, const char *, size_t);
 size_t	 strlcpy(char *, const char *, size_t);
 const char *getprogname(void) __constfunc;
@@ -109,6 +112,7 @@ void	 strmode(mode_t, char *);
 int	statvfs(const char *__restrict, struct statvfs *__restrict);
 const char	*group_from_gid(gid_t, int);
 const char	*user_from_uid(uid_t, int);
+char	*fgetln(FILE * __restrict, size_t * __restrict);
 
 #ifndef __GLIBC__
 quad_t	 strtoq(const char * __restrict, char ** __restrict, int);

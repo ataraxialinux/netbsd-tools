@@ -1,0 +1,53 @@
+diff -ruN ../netbsd/usr.bin/xargs/strnsubst.c src/xargs/strnsubst.c
+--- ../netbsd/usr.bin/xargs/strnsubst.c	2020-04-10 23:58:13.645336000 +0900
++++ src/xargs/strnsubst.c	2020-04-11 20:18:12.861021992 +0900
+@@ -8,19 +8,12 @@
+  * 	For the man who taught me vi, and who got too old, too young.
+  */
+ 
+-#include <sys/cdefs.h>
+-#ifndef lint
+-#if 0
+-__FBSDID("$FreeBSD: src/usr.bin/xargs/strnsubst.c,v 1.8 2005/12/30 23:22:50 jmallett Exp $");
+-#endif
+-__RCSID("$NetBSD: strnsubst.c,v 1.1 2007/04/18 15:56:07 christos Exp $");
+-#endif /* not lint */
+-
+ #include <err.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
+ #include <stdint.h>
++#include <bsd.h>
+ 
+ void	strnsubst(char **, const char *, const char *, size_t);
+ 
+diff -ruN ../netbsd/usr.bin/xargs/xargs.c src/xargs/xargs.c
+--- ../netbsd/usr.bin/xargs/xargs.c	2020-04-10 23:58:13.645336000 +0900
++++ src/xargs/xargs.c	2020-04-11 20:18:17.432022412 +0900
+@@ -34,17 +34,6 @@
+  * $xMach: xargs.c,v 1.6 2002/02/23 05:27:47 tim Exp $
+  */
+ 
+-#include <sys/cdefs.h>
+-#ifndef lint
+-__COPYRIGHT("@(#) Copyright (c) 1990, 1993\
+- The Regents of the University of California.  All rights reserved.");
+-#if 0
+-static char sccsid[] = "@(#)xargs.c	8.1 (Berkeley) 6/6/93";
+-__FBSDID("$FreeBSD: src/usr.bin/xargs/xargs.c,v 1.62 2006/01/01 22:59:54 jmallett Exp $");
+-#endif
+-__RCSID("$NetBSD: xargs.c,v 1.20 2010/12/17 11:32:57 plunky Exp $");
+-#endif /* not lint */
+-
+ #include <sys/param.h>
+ #include <sys/wait.h>
+ 
+@@ -60,6 +49,7 @@
+ #include <string.h>
+ #include <signal.h>
+ #include <unistd.h>
++#include <bsd.h>
+ 
+ #include "pathnames.h"
+ 

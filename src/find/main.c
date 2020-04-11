@@ -49,8 +49,6 @@
 
 #include "find.h"
 
-#define REG_BASIC 0000
-
 time_t now;			/* time find was run */
 int dotfd;			/* starting directory */
 int ftsoptions;			/* options for the ftsopen(3) call */
