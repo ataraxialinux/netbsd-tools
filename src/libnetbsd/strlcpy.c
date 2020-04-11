@@ -22,11 +22,6 @@
 #include "nbtool_config.h"
 #endif
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-__RCSID("$NetBSD: strlcpy.c,v 1.3 2007/06/04 18:19:27 christos Exp $");
-#endif /* LIBC_SCCS and not lint */
-
 #ifdef _LIBC
 #include "namespace.h"
 #endif

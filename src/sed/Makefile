@@ -197,10 +197,10 @@ AUTOCONF = ${SHELL} /home/yuyu/junk/netbsd-tools/missing autoconf
 AUTOHEADER = ${SHELL} /home/yuyu/junk/netbsd-tools/missing autoheader
 AUTOMAKE = ${SHELL} /home/yuyu/junk/netbsd-tools/missing automake-1.16
 AWK = gawk
-CC = gcc
+CC = x86_64-linux-musl-gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
-CPP = gcc -E
+CPP = x86_64-linux-musl-gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"netbsd-tools\" -DPACKAGE_TARNAME=\"netbsd-tools\" -DPACKAGE_VERSION=\"9.0\" -DPACKAGE_STRING=\"netbsd-tools\ 9.0\" -DPACKAGE_BUGREPORT=\"ataraxialinux@protonmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"netbsd-tools\" -DVERSION=\"9.0\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -D__EXTENSIONS__=1 -D_ALL_SOURCE=1 -D_GNU_SOURCE=1 -D_POSIX_PTHREAD_SEMANTICS=1 -D_TANDEM_SOURCE=1 -DSTDC_HEADERS=1
@@ -231,30 +231,30 @@ PACKAGE_TARNAME = netbsd-tools
 PACKAGE_URL = 
 PACKAGE_VERSION = 9.0
 PATH_SEPARATOR = :
-RANLIB = ranlib
+RANLIB = x86_64-linux-musl-ranlib
 SET_MAKE = 
 SHELL = /bin/sh
-STRIP = 
+STRIP = x86_64-linux-musl-strip
 VERSION = 9.0
 abs_builddir = /home/yuyu/junk/netbsd-tools/src/sed
 abs_srcdir = /home/yuyu/junk/netbsd-tools/src/sed
 abs_top_builddir = /home/yuyu/junk/netbsd-tools
 abs_top_srcdir = /home/yuyu/junk/netbsd-tools
-ac_ct_CC = gcc
+ac_ct_CC = 
 am__include = include
 am__leading_dot = .
 am__quote = 
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build_alias = 
+build_alias = x86_64-redhat-linux
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host_alias = 
+host_alias = x86_64-linux-musl
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
@@ -295,9 +295,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/sed/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/sed/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign src/sed/Makefile
+	  $(AUTOMAKE) --gnu src/sed/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \

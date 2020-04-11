@@ -34,15 +34,11 @@
  * <<Id: LICENSE,v 1.2 2000/06/14 15:57:33 cgd Exp>>
  */
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-__RCSID("$NetBSD: setprogname.c,v 1.3 2003/07/26 19:24:44 salo Exp $");
-#endif /* LIBC_SCCS and not lint */
-
 /* In NetBSD, the program name is set by crt0.  It can't be overridden. */
 #undef	REALLY_SET_PROGNAME
 
 #include <stdlib.h>
+#include <bsd.h>
 
 #ifdef REALLY_SET_PROGNAME
 #include <string.h>

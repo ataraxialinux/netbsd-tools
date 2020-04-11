@@ -1,4 +1,4 @@
-/*	$NetBSD: errc.c,v 1.3 2014/06/06 11:38:41 joerg Exp $	*/
+/*	$NetBSD: verrc.c,v 1.3 2014/06/06 11:38:41 joerg Exp $	*/
 
 /*-
  * Copyright (c) 1993
@@ -35,20 +35,25 @@
 
 #include <err.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <bsd.h>
 
 #ifdef __weak_alias
-__weak_alias(errc, _errc)
+__weak_alias(verrc, _verrc)
 #endif
 
 #if !HAVE_ERR_H || !HAVE_DECL_ERRC
 __dead void
-errc(int eval, int code, const char *fmt, ...)
+verrc(int eval, int code, const char *fmt, va_list ap)
 {
-	va_list ap;
-
-	va_start(ap, fmt);
-	verrc(eval, code, fmt, ap);
-	va_end(ap);
+	(void)fprintf(stderr, "%s: ", getprogname());
+	if (fmt != NULL) {
+		(void)vfprintf(stderr, fmt, ap);
+		(void)fprintf(stderr, ": ");
+	}
+	(void)fprintf(stderr, "%s\n", strerror(code));
+	exit(eval);
 }
 #endif
