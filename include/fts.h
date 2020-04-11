@@ -31,12 +31,8 @@
  *	@(#)fts.h	8.3 (Berkeley) 8/14/94
  */
 
-#include <sys/types.h>
-#include <sys/sysmacros.h>
-#include <stdarg.h>
-#include <stddef.h>
 #include <stdint.h>
-#include <wchar.h>
+#include <sys/types.h>
 
 #ifndef	_FTS_H_
 #define	_FTS_H_
