@@ -14,5 +14,6 @@ AC_CONFIG_FILES([Makefile
 		src/Makefile
 		src/libnetbsd/Makefile
 		src/sed/Makefile
-		src/find/Makefile])
+		src/find/Makefile
+		src/xargs/Makefile])
 AC_OUTPUT

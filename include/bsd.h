@@ -17,6 +17,7 @@
 #define _DIAGASSERT assert
 #define	__predict_true(exp)	__builtin_expect((exp) != 0, 1)
 #define	__predict_false(exp)	__builtin_expect((exp) != 0, 0)
+#define __nothing	(/*LINTED*/(void)0)
 
 #ifndef __GLIBC__
 #if defined(__cplusplus)
