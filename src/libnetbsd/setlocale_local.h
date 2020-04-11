@@ -43,6 +43,19 @@
 extern const char		*_PathLocale;
 #define _LOCALE_ALIAS_NAME	"locale.alias"
 
+#ifndef __GLIBC__
+#if defined(__cplusplus)
+#define	__BEGIN_EXTERN_C	extern "C" {
+#define	__END_EXTERN_C		}
+#else
+#define	__BEGIN_EXTERN_C
+#define	__END_EXTERN_C
+#endif
+
+#define	__BEGIN_DECLS	__BEGIN_EXTERN_C
+#define	__END_DECLS	__END_EXTERN_C
+#endif
+
 typedef void *_locale_part_t;
 
 struct _locale_cache_t {

@@ -35,3 +35,6 @@ Makefile.in
 src/sed/sed
 src/find/find
 src/xargs/xargs
+src/sed/Makefile
+src/find/Makefile
+src/xargs/Makefile

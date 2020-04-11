@@ -3,6 +3,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 noinst_LIBRARIES = libnetbsd.a
 libnetbsd_a_SOURCES = efun.c \
 			errc.c \
+			fts.c \
 			getprogname.c \
 			parsedate.tab.c \
 			pwcache.c \
@@ -13,6 +14,7 @@ libnetbsd_a_SOURCES = efun.c \
 			strlcat.c \
 			strlcpy.c \
 			strmode.c \
+			strtoq.c \
 			strtoi.c \
 			strtoimax.c \
 			strtou.c \
