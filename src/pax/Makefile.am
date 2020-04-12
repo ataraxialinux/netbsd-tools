@@ -6,5 +6,5 @@ pax_LDADD = ../libnetbsd/libnetbsd.a
 man1_MANS = pax.1 tar.1 cpio.1
 
 install-exec-hook:
-	$(LN_S) pax $(bindir)/cpio
-	$(LN_S) pax $(bindir)/tar
+	ln -sf pax $(DESTDIR)$(bindir)/cpio
+	ln -sf pax $(DESTDIR)$(bindir)/tar

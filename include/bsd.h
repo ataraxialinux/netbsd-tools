@@ -169,3 +169,8 @@ uintmax_t	strtou(const char * __restrict, char ** __restrict, int,
 int	 vasprintf(char ** __restrict, const char * __restrict,
     __va_list)
 		__printflike(2, 0);
+
+/* __OpenBSD */
+#ifndef __GLIBC__
+void	*reallocarray(void *, size_t, size_t);
+#endif

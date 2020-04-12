@@ -11,6 +11,7 @@ libnetbsd_a_SOURCES = efun.c \
 			pwcache.c \
 			setprogname.c \
 			reallocarr.c \
+			reallocarray.c \
 			raise_default_signal.c \
 			setmode.c \
 			stat_flags.c \
