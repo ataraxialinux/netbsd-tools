@@ -34,6 +34,7 @@
 #ifndef _VIS_H_
 #define	_VIS_H_
 
+#include <bsd.h>
 #include <sys/types.h>
 
 /*
@@ -82,8 +83,6 @@
  */
 #define	UNVIS_END	_VIS_END	/* no more characters */
 
-#include <sys/cdefs.h>
-
 __BEGIN_DECLS
 char	*vis(char *, int, int, int);
 char	*nvis(char *, size_t, int, int, int);
@@ -114,7 +113,7 @@ int	strunvisx(char *, const char *, int);
 int	strnunvisx(char *, size_t, const char *, int);
 
 #ifndef __LIBC12_SOURCE__
-int	unvis(char *, int, int *, int) __RENAME(__unvis50);
+int	unvis(char *, int, int *, int);
 #endif
 __END_DECLS
 

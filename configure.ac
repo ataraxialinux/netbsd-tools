@@ -18,5 +18,6 @@ AC_CONFIG_FILES([Makefile
 		src/sed/Makefile
 		src/find/Makefile
 		src/xargs/Makefile
-		src/patch/Makefile])
+		src/patch/Makefile
+		src/pax/Makefile])
 AC_OUTPUT

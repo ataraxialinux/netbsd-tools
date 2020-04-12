@@ -1,1 +1,1 @@
-SUBDIRS = libnetbsd sed find xargs patch
+SUBDIRS = libnetbsd sed find xargs patch pax

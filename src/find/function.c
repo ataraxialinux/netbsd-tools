@@ -34,6 +34,7 @@
 
 #include <sys/param.h>
 #include <sys/stat.h>
+#include <sys/statvfs.h>
 #include <sys/wait.h>
 #include <sys/mount.h>
 
@@ -68,6 +69,16 @@
 		abort();						\
 	}								\
 }
+
+struct netbsd_statvfs {
+	struct statvfs buf;
+	unsigned long	f_flag;
+	char	f_fstypename[_VFS_NAMELEN];
+};
+
+#define	statvfs		netbsd_statvfs
+
+int	statvfs(const char *__restrict, struct statvfs *__restrict);
 
 static	int64_t	find_parsenum(PLAN *, const char *, const char *, char *);
 static	void	run_f_exec(PLAN *);

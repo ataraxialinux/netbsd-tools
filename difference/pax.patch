@@ -1,0 +1,465 @@
+diff -ruN ../../netbsd/bin/pax/ar_io.c pax/ar_io.c
+--- ../../netbsd/bin/pax/ar_io.c	2020-04-10 23:57:34.897335232 +0900
++++ pax/ar_io.c	2020-04-12 22:22:28.583225553 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)ar_io.c	8.2 (Berkeley) 4/18/94";
+-#else
+-__RCSID("$NetBSD: ar_io.c,v 1.59 2019/02/04 04:36:41 mrg Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/param.h>
+ #include <sys/ioctl.h>
+ #ifdef HAVE_SYS_MTIO_H
+@@ -63,6 +54,7 @@
+ #include <string.h>
+ #include <time.h>
+ #include <unistd.h>
++#include <bsd.h>
+ #ifdef SUPPORT_RMT
+ #define __RMTLIB_PRIVATE
+ #include <rmt.h>
+diff -ruN ../../netbsd/bin/pax/ar_subs.c pax/ar_subs.c
+--- ../../netbsd/bin/pax/ar_subs.c	2020-04-10 23:57:34.897335232 +0900
++++ pax/ar_subs.c	2020-04-12 22:50:26.016258821 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)ar_subs.c	8.2 (Berkeley) 4/18/94";
+-#else
+-__RCSID("$NetBSD: ar_subs.c,v 1.56 2011/08/31 16:24:54 plunky Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -59,6 +50,7 @@
+ #include <time.h>
+ #include <unistd.h>
+ #include <stdlib.h>
++#include <bsd.h>
+ #include "pax.h"
+ #include "pat_rep.h"
+ #include "extern.h"
+@@ -117,10 +109,12 @@
+ static int
+ fdochroot(int fcwd)
+ {
++#if 0
+ 	if (fchroot(fcwd) != 0) {
+ 		syswarn(1, errno, "Can't fchroot to \".\"");
+ 		return -1;
+ 	}
++#endif
+ 	return updatepath();
+ }
+ #endif
+diff -ruN ../../netbsd/bin/pax/buf_subs.c pax/buf_subs.c
+--- ../../netbsd/bin/pax/buf_subs.c	2020-04-10 23:57:34.898335232 +0900
++++ pax/buf_subs.c	2020-04-12 22:21:42.561224641 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)buf_subs.c	8.2 (Berkeley) 4/18/94";
+-#else
+-__RCSID("$NetBSD: buf_subs.c,v 1.29 2018/03/19 03:11:39 msaitoh Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -56,6 +47,7 @@
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <bsd.h>
+ #include "pax.h"
+ #include "extern.h"
+ 
+diff -ruN ../../netbsd/bin/pax/cpio.c pax/cpio.c
+--- ../../netbsd/bin/pax/cpio.c	2020-04-10 23:57:34.898335232 +0900
++++ pax/cpio.c	2020-04-12 22:21:12.096224036 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)cpio.c	8.1 (Berkeley) 5/31/93";
+-#else
+-__RCSID("$NetBSD: cpio.c,v 1.22 2012/08/09 08:09:21 christos Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -55,6 +46,7 @@
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <stdlib.h>
++#include <bsd.h>
+ #include "pax.h"
+ #include "cpio.h"
+ #include "extern.h"
+diff -ruN ../../netbsd/bin/pax/extern.h pax/extern.h
+--- ../../netbsd/bin/pax/extern.h	2020-04-10 23:57:34.898335232 +0900
++++ pax/extern.h	2020-04-12 22:27:17.537231284 +0900
+@@ -39,7 +39,7 @@
+  * External references from each source file
+  */
+ 
+-#include <sys/cdefs.h>
++#include <bsd.h>
+ #include <err.h>
+ 
+ /*
+Binary files ../../netbsd/bin/pax/extern.h.gch and pax/extern.h.gch differ
+diff -ruN ../../netbsd/bin/pax/file_subs.c pax/file_subs.c
+--- ../../netbsd/bin/pax/file_subs.c	2020-04-10 23:57:34.898335232 +0900
++++ pax/file_subs.c	2020-04-12 22:40:33.669247073 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)file_subs.c	8.1 (Berkeley) 5/31/93";
+-#else
+-__RCSID("$NetBSD: file_subs.c,v 1.64 2019/03/20 03:13:39 gutteridge Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -58,6 +49,7 @@
+ #include <errno.h>
+ #include <sys/uio.h>
+ #include <stdlib.h>
++#include <bsd.h>
+ #include "pax.h"
+ #include "extern.h"
+ #include "options.h"
+@@ -241,7 +233,7 @@
+ 		(void)unlink(tmp_name);
+ 	}
+ 
+-#if HAVE_STRUCT_STAT_ST_FLAGS
++#if 0
+ 	if (pfflags && arcn->type != PAX_SLK)
+ 		set_chflags(arcn->name, arcn->sb.st_flags);
+ #endif
+@@ -610,7 +602,7 @@
+ 		set_ftime(arcn->name, arcn->sb.st_mtime,
+ 		    arcn->sb.st_atime, 0, (arcn->type == PAX_SLK) ? 1 : 0);
+ 
+-#if HAVE_STRUCT_STAT_ST_FLAGS
++#if 0
+ 	if (pfflags && arcn->type != PAX_SLK)
+ 		set_chflags(arcn->name, arcn->sb.st_flags);
+ #endif
+diff -ruN ../../netbsd/bin/pax/ftree.c pax/ftree.c
+--- ../../netbsd/bin/pax/ftree.c	2020-04-10 23:57:34.899335232 +0900
++++ pax/ftree.c	2020-04-12 22:21:46.804224725 +0900
+@@ -66,15 +66,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)ftree.c	8.2 (Berkeley) 4/18/94";
+-#else
+-__RCSID("$NetBSD: ftree.c,v 1.42 2012/09/27 00:44:59 christos Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -86,6 +77,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
++#include <bsd.h>
+ #include "pax.h"
+ #include "ftree.h"
+ #include "extern.h"
+diff -ruN ../../netbsd/bin/pax/gen_subs.c pax/gen_subs.c
+--- ../../netbsd/bin/pax/gen_subs.c	2020-04-10 23:57:34.899335232 +0900
++++ pax/gen_subs.c	2020-04-12 22:22:43.571225851 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)gen_subs.c	8.1 (Berkeley) 5/31/93";
+-#else
+-__RCSID("$NetBSD: gen_subs.c,v 1.37 2018/11/30 00:53:11 christos Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -61,6 +52,7 @@
+ #include <time.h>
+ #include <tzfile.h>
+ #include <unistd.h>
++#include <bsd.h>
+ 
+ #include "pax.h"
+ #include "extern.h"
+diff -ruN ../../netbsd/bin/pax/getoldopt.c pax/getoldopt.c
+--- ../../netbsd/bin/pax/getoldopt.c	2020-04-10 23:57:34.899335232 +0900
++++ pax/getoldopt.c	2020-04-12 22:21:20.702224207 +0900
+@@ -13,11 +13,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-__RCSID("$NetBSD: getoldopt.c,v 1.23 2012/08/09 11:05:59 christos Exp $");
+-#endif /* not lint */
+-
+ #if HAVE_NBTOOL_CONFIG_H
+ #include "compat_getopt.h"
+ #else
+@@ -29,6 +24,7 @@
+ #include <unistd.h>
+ #include <stdint.h>
+ #include <sys/stat.h>
++#include <bsd.h>
+ #include "pax.h"
+ #include "extern.h"
+ 
+diff -ruN ../../netbsd/bin/pax/options.c pax/options.c
+--- ../../netbsd/bin/pax/options.c	2020-04-10 23:57:34.899335232 +0900
++++ pax/options.c	2020-04-12 22:35:05.116240557 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)options.c	8.2 (Berkeley) 4/18/94";
+-#else
+-__RCSID("$NetBSD: options.c,v 1.119 2020/04/03 16:13:32 joerg Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -64,7 +55,7 @@
+ #include <unistd.h>
+ #include <inttypes.h>
+ #include <paths.h>
+-#include <util.h>
++#include <bsd.h>
+ #include "pax.h"
+ #include "options.h"
+ #include "cpio.h"
+diff -ruN ../../netbsd/bin/pax/pat_rep.c pax/pat_rep.c
+--- ../../netbsd/bin/pax/pat_rep.c	2020-04-10 23:57:34.900335232 +0900
++++ pax/pat_rep.c	2020-04-12 22:21:31.439224420 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)pat_rep.c	8.2 (Berkeley) 4/18/94";
+-#else
+-__RCSID("$NetBSD: pat_rep.c,v 1.31 2019/03/20 02:50:50 gutteridge Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -55,6 +46,7 @@
+ #include <string.h>
+ #include <unistd.h>
+ #include <stdlib.h>
++#include <bsd.h>
+ #include "pax.h"
+ #include "pat_rep.h"
+ #include "extern.h"
+diff -ruN ../../netbsd/bin/pax/pax.c pax/pax.c
+--- ../../netbsd/bin/pax/pax.c	2020-04-10 23:57:34.900335232 +0900
++++ pax/pax.c	2020-04-12 22:23:35.418226879 +0900
+@@ -37,17 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-__COPYRIGHT("@(#) Copyright (c) 1992, 1993\
+- The Regents of the University of California.  All rights reserved.");
+-#if 0
+-static char sccsid[] = "@(#)pax.c	8.2 (Berkeley) 4/18/94";
+-#else
+-__RCSID("$NetBSD: pax.c,v 1.49 2019/04/24 17:27:08 cheusov Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/param.h>
+ #include <sys/resource.h>
+ #include <sys/stat.h>
+@@ -61,7 +50,7 @@
+ #include <string.h>
+ #include <time.h>
+ #include <unistd.h>
+-#include <util.h>
++#include <bsd.h>
+ #include "pax.h"
+ #include "extern.h"
+ static int gen_init(void);
+diff -ruN ../../netbsd/bin/pax/sel_subs.c pax/sel_subs.c
+--- ../../netbsd/bin/pax/sel_subs.c	2020-04-10 23:57:34.900335232 +0900
++++ pax/sel_subs.c	2020-04-12 22:22:07.149225128 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)sel_subs.c	8.1 (Berkeley) 5/31/93";
+-#else
+-__RCSID("$NetBSD: sel_subs.c,v 1.24 2011/08/31 16:24:54 plunky Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -61,6 +52,7 @@
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <tzfile.h>
++#include <bsd.h>
+ 
+ #include "pax.h"
+ #include "sel_subs.h"
+diff -ruN ../../netbsd/bin/pax/tables.c pax/tables.c
+--- ../../netbsd/bin/pax/tables.c	2020-04-10 23:57:34.901335232 +0900
++++ pax/tables.c	2020-04-12 22:40:59.192247579 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)tables.c	8.1 (Berkeley) 5/31/93";
+-#else
+-__RCSID("$NetBSD: tables.c,v 1.31 2013/10/18 19:53:34 christos Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -1181,11 +1172,7 @@
+ 	dblk.mode = psb->st_mode & 0xffff;
+ 	dblk.mtime = psb->st_mtime;
+ 	dblk.atime = psb->st_atime;
+-#if HAVE_STRUCT_STAT_ST_FLAGS
+-	dblk.fflags = psb->st_flags;
+-#else
+ 	dblk.fflags = 0;
+-#endif
+ 	dblk.frc_mode = frc_mode;
+ 	if ((xwrite(dirfd, name, dblk.nlen) == dblk.nlen) &&
+ 	    (xwrite(dirfd, (char *)&dblk, sizeof(dblk)) == sizeof(dblk))) {
+@@ -1210,11 +1197,7 @@
+ 	dblk->mode = psb->st_mode & 0xffff;
+ 	dblk->mtime = psb->st_mtime;
+ 	dblk->atime = psb->st_atime;
+-#if HAVE_STRUCT_STAT_ST_FLAGS
+-	dblk->fflags = psb->st_flags;
+-#else
+ 	dblk->fflags = 0;
+-#endif
+ 	dblk->frc_mode = frc_mode;
+ 
+ 	dblk->next = dirdata_head;
+diff -ruN ../../netbsd/bin/pax/tar.c pax/tar.c
+--- ../../netbsd/bin/pax/tar.c	2020-04-10 23:57:34.901335232 +0900
++++ pax/tar.c	2020-04-12 22:22:12.824225241 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)tar.c	8.2 (Berkeley) 4/18/94";
+-#else
+-__RCSID("$NetBSD: tar.c,v 1.75 2019/03/20 03:13:39 gutteridge Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -59,6 +50,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
++#include <bsd.h>
+ 
+ #include "pax.h"
+ #include "extern.h"
+diff -ruN ../../netbsd/bin/pax/tty_subs.c pax/tty_subs.c
+--- ../../netbsd/bin/pax/tty_subs.c	2020-04-10 23:57:34.901335232 +0900
++++ pax/tty_subs.c	2020-04-12 22:21:37.473224540 +0900
+@@ -37,15 +37,6 @@
+ #include "nbtool_config.h"
+ #endif
+ 
+-#include <sys/cdefs.h>
+-#if !defined(lint)
+-#if 0
+-static char sccsid[] = "@(#)tty_subs.c	8.2 (Berkeley) 4/18/94";
+-#else
+-__RCSID("$NetBSD: tty_subs.c,v 1.19 2007/04/23 18:40:22 christos Exp $");
+-#endif
+-#endif /* not lint */
+-
+ #include <sys/types.h>
+ #include <sys/time.h>
+ #include <sys/stat.h>
+@@ -57,6 +48,7 @@
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <bsd.h>
+ #include "pax.h"
+ #include "extern.h"
+ #include <stdarg.h>

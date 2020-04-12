@@ -1,12 +1,11 @@
 #include <sys/types.h>
-#include <sys/statfs.h>
-#include <sys/statvfs.h>
 #include <sys/sysmacros.h>
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <inttypes.h>
 #include <wchar.h>
+#include <limits.h>
 
 #define	__attribute__(x)
 #define __dead		__attribute__((__noreturn__))
@@ -123,13 +122,7 @@
 #define	_VFS_NAMELEN	32
 #define	_VFS_MNAMELEN	1024
 
-struct netbsd_statvfs {
-	struct statvfs buf;
-	unsigned long	f_flag;
-	char	f_fstypename[_VFS_NAMELEN];
-};
-
-#define	statvfs		netbsd_statvfs
+#define	_PATH_DEFTAPE "/dev/st0"
 
 typedef va_list __va_list;
 
@@ -147,13 +140,15 @@ int		string_to_flags(char **, unsigned long *, unsigned long *);
 void	*setmode(const char *);
 mode_t	 getmode(const void *, mode_t);
 void	 strmode(mode_t, char *);
-int	statvfs(const char *__restrict, struct statvfs *__restrict);
+int		 gid_from_group(const char *, gid_t *);
 const char	*group_from_gid(gid_t, int);
+int		 uid_from_user(const char *, uid_t *);
 const char	*user_from_uid(uid_t, int);
 char	*fgetln(FILE * __restrict, size_t * __restrict);
 int	reallocarr(void *, size_t, size_t);
 int		 setpassent(int);
 int		 setgroupent(int);
+int		raise_default_signal(int);
 
 #ifndef __GLIBC__
 quad_t	 strtoq(const char * __restrict, char ** __restrict, int);

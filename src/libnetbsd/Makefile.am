@@ -11,6 +11,7 @@ libnetbsd_a_SOURCES = efun.c \
 			pwcache.c \
 			setprogname.c \
 			reallocarr.c \
+			raise_default_signal.c \
 			setmode.c \
 			stat_flags.c \
 			strlcat.c \
@@ -22,4 +23,5 @@ libnetbsd_a_SOURCES = efun.c \
 			strtou.c \
 			strtoumax.c \
 			useless.c \
-			verrc.c
+			verrc.c \
+			vis.c
