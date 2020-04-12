@@ -1,8 +1,9 @@
-/*	$NetBSD: vis.h,v 1.25 2017/04/23 01:57:36 christos Exp $	*/
+/*	$OpenBSD: vis.h,v 1.15 2015/07/20 01:52:27 millert Exp $	*/
+/*	$NetBSD: vis.h,v 1.4 1994/10/26 00:56:41 cgd Exp $	*/
 
 /*-
- * Copyright (c) 1990, 1993
- *	The Regents of the University of California.  All rights reserved.
+ * Copyright (c) 1990 The Regents of the University of California.
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,46 +29,35 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	@(#)vis.h	8.1 (Berkeley) 6/2/93
+ *	@(#)vis.h	5.9 (Berkeley) 4/3/91
  */
 
 #ifndef _VIS_H_
 #define	_VIS_H_
 
-#include <bsd.h>
-#include <sys/types.h>
-
 /*
  * to select alternate encoding format
  */
-#define	VIS_OCTAL	0x0001	/* use octal \ddd format */
-#define	VIS_CSTYLE	0x0002	/* use \[nrft0..] where appropiate */
+#define	VIS_OCTAL	0x01	/* use octal \ddd format */
+#define	VIS_CSTYLE	0x02	/* use \[nrft0..] where appropriate */
 
 /*
  * to alter set of characters encoded (default is to encode all
  * non-graphic except space, tab, and newline).
  */
-#define	VIS_SP		0x0004	/* also encode space */
-#define	VIS_TAB		0x0008	/* also encode tab */
-#define	VIS_NL		0x0010	/* also encode newline */
+#define	VIS_SP		0x04	/* also encode space */
+#define	VIS_TAB		0x08	/* also encode tab */
+#define	VIS_NL		0x10	/* also encode newline */
 #define	VIS_WHITE	(VIS_SP | VIS_TAB | VIS_NL)
-#define	VIS_SAFE	0x0020	/* only encode "unsafe" characters */
-#define	VIS_DQ		0x8000	/* also encode double quotes */
+#define	VIS_SAFE	0x20	/* only encode "unsafe" characters */
+#define	VIS_DQ		0x200	/* backslash-escape double quotes */
+#define	VIS_ALL		0x400	/* encode all characters */
 
 /*
  * other
  */
-#define	VIS_NOSLASH	0x0040	/* inhibit printing '\' */
-#define	VIS_HTTP1808	0x0080	/* http-style escape % hex hex */
-#define	VIS_HTTPSTYLE	0x0080	/* http-style escape % hex hex */
-#define	VIS_MIMESTYLE	0x0100	/* mime-style escape = HEX HEX */
-#define	VIS_HTTP1866	0x0200	/* http-style &#num; or &string; */
-#define	VIS_NOESCAPE	0x0400	/* don't decode `\' */
-#define	_VIS_END	0x0800	/* for unvis */
-#define	VIS_GLOB	0x1000	/* encode glob(3) magic characters */
-#define	VIS_SHELL	0x2000	/* encode shell special characters [not glob] */
-#define	VIS_META	(VIS_WHITE | VIS_GLOB | VIS_SHELL)
-#define	VIS_NOLOCALE	0x4000	/* encode using the C locale */
+#define	VIS_NOSLASH	0x40	/* inhibit printing '\' */
+#define	VIS_GLOB	0x100	/* encode glob(3) magics and '#' */
 
 /*
  * unvis return codes
@@ -81,40 +71,23 @@
 /*
  * unvis flags
  */
-#define	UNVIS_END	_VIS_END	/* no more characters */
+#define	UNVIS_END	1	/* no more characters */
+
+#include <bsd.h>
 
 __BEGIN_DECLS
 char	*vis(char *, int, int, int);
-char	*nvis(char *, size_t, int, int, int);
-
-char	*svis(char *, int, int, int, const char *);
-char	*snvis(char *, size_t, int, int, int, const char *);
-
 int	strvis(char *, const char *, int);
 int	stravis(char **, const char *, int);
-int	strnvis(char *, size_t, const char *, int);
-
-int	strsvis(char *, const char *, int, const char *);
-int	strsnvis(char *, size_t, const char *, int, const char *);
-
-int	strvisx(char *, const char *, size_t, int);
-int	strnvisx(char *, size_t, const char *, size_t, int);
-int 	strenvisx(char *, size_t, const char *, size_t, int, int *);
-
-int	strsvisx(char *, const char *, size_t, int, const char *);
-int	strsnvisx(char *, size_t, const char *, size_t, int, const char *);
-int	strsenvisx(char *, size_t, const char *, size_t , int, const char *,
-    int *);
-
+int	strnvis(char *, const char *, size_t, int)
+		__attribute__ ((__bounded__(__string__,1,3)));
+int	strvisx(char *, const char *, size_t, int)
+		__attribute__ ((__bounded__(__string__,1,3)));
 int	strunvis(char *, const char *);
-int	strnunvis(char *, size_t, const char *);
+int	unvis(char *, char, int *, int);
+ssize_t strnunvis(char *, const char *, size_t)
+		__attribute__ ((__bounded__(__string__,1,3)));
 
-int	strunvisx(char *, const char *, int);
-int	strnunvisx(char *, size_t, const char *, int);
-
-#ifndef __LIBC12_SOURCE__
-int	unvis(char *, int, int *, int);
-#endif
 __END_DECLS
 
 #endif /* !_VIS_H_ */
